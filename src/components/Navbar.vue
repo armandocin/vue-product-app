@@ -1,11 +1,11 @@
 <template>
-  <div class="nav-bar">
+  <nav class="nav-bar">
     <a :href="vueHome" target="_blank">
       <img alt="Vue logo" src="../assets/logo.png" height="50px" width="50px">
     </a>
-    <nav>
-    </nav>
-  </div>
+    <router-link to="/">Home</router-link>
+    <router-link to="/about">About</router-link>
+  </nav>
 </template>
 
 <script>
@@ -34,5 +34,15 @@ export default {
     background: linear-gradient(-90deg, #84CF6A, #16C0B0);
     height: 60px;
     margin-bottom: 15px;
+    color: #000;
+  }
+
+  .nav-bar a {
+    color: #000;
+    margin-right: 24px;
+  }
+
+  .nav-bar a:hover {
+    color: #444;
   }
 </style>

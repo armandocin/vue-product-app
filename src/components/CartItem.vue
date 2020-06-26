@@ -3,13 +3,34 @@
         <p>{{ item.product.brand }} {{ item.product.name }}</p>
         <p>{{ item.product.color }}</p>
         <p>{{ item.product.price }}</p>
-        <p>Quantity: {{ item.quantity }}</p>
-        <form v-on:submit.prevent="remove">
-            <div class="form-remove-item">
-                <input type="submit" value="Remove">
-                <input id="quantity" v-model.number="quantityToRemove">
-            </div>
-        </form>
+        <button v-on:click="remove">Remove</button>
+        <label>
+            <select name="quantity" v-model.number="newQuantity" v-on:change="changeQuantity" >
+                <option
+                    v-for="i in Array.from(Array(9).keys())"
+                    :key="i"
+                    :value="i"
+                >
+                    {{i === 0 ? `${i} (Remove)` : i}}
+                </option>
+            </select>
+        </label>
+
+        <!--
+        The following code allow to do what's done in the above but without using computed property but only a data newQuantity
+        <label>
+            <select name="quantity" v-on:change="changeQuantity" >
+                <option
+                        v-for="i in Array.from(Array(9).keys())"
+                        :key="i"
+                        :value="i"
+                        :selected="i === item.quantity"
+                >
+                    {{i === 0 ? `${i} (Remove)` : i}}
+                </option>
+            </select>
+        </label>
+        -->
     </li>
 </template>
 
@@ -18,21 +39,30 @@
     name: 'CartItem',
     props: {
       item: {type: Object},
-      onRemove: {type: Function}
-    },
-    data() {
-      return {
-        quantityToRemove: this.item.quantity
-      }
+      onRemove: {type: Function},
+      onChangeQuantity: {type: Function}
     },
     watch: {
-      item(i) {
-        this.quantityToRemove = i.quantity
+      newQuantity(val) {
+        this.newQuantity = val
       }
     },
     methods: {
       remove() {
-        this.onRemove(this.item.product.id, this.quantityToRemove)
+        this.onRemove(this.item.product.id)
+      },
+      changeQuantity() {
+        this.onChangeQuantity(this.item.product.id, this.newQuantity)
+      }
+    },
+    computed: {
+      newQuantity: {
+        get() {
+          return this.item.quantity
+        },
+        set(val) {
+          this.item.quantity = val
+        }
       }
     }
   }

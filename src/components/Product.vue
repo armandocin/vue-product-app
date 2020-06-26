@@ -43,6 +43,8 @@
             </div>
         </div>
 
+        <Tabs :tabs="['Reviews', 'Write a review']"></Tabs>
+
         <div>
             <h2>Reviews</h2>
             <p v-if="!reviews.length">There are no reviews for this product yet.</p>
@@ -61,10 +63,11 @@
 
 <script>
   import ReviewForm from './ReviewForm'
+  import Tabs from './Tabs'
 
   export default {
     name: 'Product',
-    components: {ReviewForm},
+    components: {ReviewForm, Tabs},
     data: () => ({
       selectedVariant: 0,
       reviews: []
@@ -154,13 +157,4 @@
         height: 60px;
     }
 
-    .tab {
-        margin-left: 20px;
-        cursor: pointer;
-    }
-
-    .activeTab {
-        color: #16C0B0;
-        text-decoration: underline;
-    }
 </style>

@@ -7,6 +7,7 @@
                 :key="key"
                 :item="value"
                 :onRemove="removeFromCart"
+                :onChangeQuantity="changeQuantity"
             />
         </ul>
         <p>Total: {{ total }}</p>
@@ -22,8 +23,11 @@ export default {
     cart: {type: Object}
   },
   methods: {
-    removeFromCart(id, quantity) {
-      this.$emit('remove-from-cart', id, quantity)
+    removeFromCart(id) {
+      this.$emit('remove-from-cart', id)
+    },
+    changeQuantity(id, quantity) {
+      this.$emit('change-quantity', id, quantity)
     }
   },
   computed: {
@@ -43,8 +47,5 @@ export default {
     float: right;
     border: 1px solid #d8d8d8;
     padding: 5px 20px;
-}
-.form-remove-item {
-    display: flex;
 }
 </style>
