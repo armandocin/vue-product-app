@@ -2,7 +2,7 @@
     <li>
         <p>{{ item.product.brand }} {{ item.product.name }}</p>
         <p>{{ item.product.color }}</p>
-        <p>{{ item.product.price }}</p>
+        <p>{{ itemPrice }}</p>
         <button v-on:click="remove">Remove</button>
         <label>
             <select name="quantity" v-model.number="newQuantity" v-on:change="changeQuantity" >
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+  import {formatNumber} from '../utlis'
+
   export default {
     name: 'CartItem',
     props: {
@@ -63,6 +65,9 @@
         set(val) {
           this.item.quantity = val
         }
+      },
+      itemPrice() {
+        return "$" + formatNumber(this.item.product.price)
       }
     }
   }

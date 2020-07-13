@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {formatNumber} from '../utlis'
 import CartItem from './CartItem'
 export default {
   name: 'Cart',
@@ -35,7 +36,7 @@ export default {
       return Object.values(this.cart).reduce((acc, item) => acc + item.quantity, 0)
     },
     total() {
-      return Object.values(this.cart).reduce((acc, item) => acc + item.quantity*item.product.price, 0)
+      return "$" + formatNumber(Object.values(this.cart).reduce((acc, item) => acc + item.quantity*item.product.price, 0))
     }
   }
 }

@@ -10,6 +10,10 @@
 
             <div class="product-info">
                 <h1>{{ title }}</h1>
+
+                <div class="price">
+                    <span>Price:</span><span>{{ price }}</span>
+                </div>
                 <!-- v-show is more performant than if-else-->
                 <p v-show="product.variants[selectedVariant].quantity >= 10">In Stock</p>
                 <p v-show="product.variants[selectedVariant].quantity < 10 && product.variants[selectedVariant].quantity > 0">Almost sold out!</p>
@@ -70,6 +74,7 @@
 </template>
 
 <script>
+  import {formatNumber} from '../utlis'
   import ReviewForm from './ReviewForm'
   import Tabs from './Tabs'
   import Tab from './Tab'
@@ -108,6 +113,10 @@
         const selectedVariantObj = this.product.variants[this.selectedVariant]
         return `${selectedVariantObj.brand} ${selectedVariantObj.name}`
       },
+      price() {
+        const selectedVariantObj = this.product.variants[this.selectedVariant]
+        return '$' + formatNumber(selectedVariantObj.price)
+      },
       image() {
         const list = this.product.variants[this.selectedVariant].images
         return list[this.selectedImage]
@@ -124,15 +133,10 @@
 </script>
 
 <style scoped>
-    body {
-        font-family: tahoma;
-        color:#282828;
-        margin: 0px;
-    }
-
     .product {
         display: flex;
         padding: 1rem;
+        margin-bottom: 36px;
     }
 
     img {
@@ -164,6 +168,7 @@
 
     .product-info {
         flex-grow: 1;
+        padding: 0 40px;
     }
 
     .color-box {
@@ -188,6 +193,18 @@
     textarea {
         width: 100%;
         height: 60px;
+    }
+
+    .price > span:first-child {
+        margin-right: 12px;
+        color: #7b797e;
+        font-weight: 600;
+    }
+
+    .price > span:last-child {
+        font-weight: 600;
+        font-size: x-large;
+        color: darkred;
     }
 
 </style>

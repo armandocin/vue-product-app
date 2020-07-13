@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-wide">
     <Cart
         :cart="cart"
         v-on:remove-from-cart="removeFromCart"

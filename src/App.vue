@@ -22,6 +22,12 @@
     color: #2c3e50;
   }
 
+  body {
+    font-family: tahoma, sans-serif;
+    color:#282828;
+    margin: 0px;
+  }
+
   h3 {
     margin: 40px 0 0;
   }
@@ -40,6 +46,13 @@
     width: 100px;
     font-size: 14px;
     cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .container-wide {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .button-disabled {
