@@ -1,6 +1,9 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
         <div class="product">
+            <div class="product-images">
+                <img v-for="(image, index) in images" :key="image" v-on:mouseover="changeImage(index)" :src="require(`../assets/${image}.jpg`)" />
+            </div>
             <div class="product-image">
                 <img v-bind:src="require(`../assets/${image}.jpg`)" />
             </div>
@@ -76,6 +79,7 @@
     components: {ReviewForm, Tabs, Tab},
     data: () => ({
       selectedVariant: 0,
+      selectedImage: 0,
       reviews: []
     }),
     props: {
@@ -88,9 +92,15 @@
           this.product.variants[this.selectedVariant]
         )
       },
-      changeSelectedProduct(index) {this.selectedVariant = index},
+      changeSelectedProduct(index) {
+        this.selectedVariant = index
+        this.selectedImage = 0
+      },
       handleFormSubmit(reviewObj) {
         this.reviews.push(reviewObj)
+      },
+      changeImage (index) {
+        this.selectedImage = index
       }
     },
     computed: {
@@ -99,7 +109,11 @@
         return `${selectedVariantObj.brand} ${selectedVariantObj.name}`
       },
       image() {
-        return this.product.variants[this.selectedVariant].image
+        const list = this.product.variants[this.selectedVariant].images
+        return list[this.selectedImage]
+      },
+      images() {
+        return this.product.variants[this.selectedVariant].images
       },
       inStock() {
         const selectedVariantObj = this.product.variants[this.selectedVariant]
@@ -118,25 +132,38 @@
 
     .product {
         display: flex;
-        flex-flow: wrap;
         padding: 1rem;
     }
 
     img {
         border: 1px solid #d8d8d8;
-        width: 70%;
-        margin: 40px;
         box-shadow: 0 .5px 1px #d8d8d8;
     }
 
-    .product-image {
-        width: 80%;
+    .product-images {
+        display: flex;
+        flex-direction: column;
     }
 
-    .product-image,
+    .product-images img {
+        width: 50px;
+    }
+
+    .product-images img:not(:first-child) {
+        margin-top: 8px;
+    }
+
+    .product-image {
+        padding: 0 40px;;
+        width: 30%;
+    }
+
+    .product-image img {
+        width: 100%;
+    }
+
     .product-info {
-        margin-top: 10px;
-        width: 50%;
+        flex-grow: 1;
     }
 
     .color-box {
