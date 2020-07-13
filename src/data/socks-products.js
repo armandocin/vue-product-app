@@ -26,7 +26,7 @@ export const socks = [
     name: 'Socks',
     brand: 'Vue Mastery',
     color: 'red',
-    image: 'vmSocks-green-onWhite',
+    image: 'vmSocks-red-onWhite',
     quantity: 4,
     sizes: ['xs', 's', 'm', 'l', 'xl'],
     details: ['80% cotton', '20% polyester', 'Unisex'],

@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
         <div class="product">
             <div class="product-image">
@@ -43,31 +43,37 @@
             </div>
         </div>
 
-        <Tabs :tabs="['Reviews', 'Write a review']"></Tabs>
+        <Tabs>
+            <Tab id="list-reviews" title="Reviews">
+                <div>
+                    <h2>Reviews</h2>
+                    <p>{{ current }}</p>
+                    <p v-if="!reviews.length">There are no reviews for this product yet.</p>
+                    <ul v-else>
+                        <li v-for="review in reviews" :key="review.name">
+                            <p>{{ review.name }}</p>
+                            <p>{{ review.rating }}</p>
+                            <p>{{ review.review }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </Tab>
 
-        <div>
-            <h2>Reviews</h2>
-            <p v-if="!reviews.length">There are no reviews for this product yet.</p>
-            <ul v-else>
-                <li v-for="review in reviews" :key="review.name">
-                    <p>{{ review.name }}</p>
-                    <p>{{ review.rating }}</p>
-                    <p>{{ review.review }}</p>
-                </li>
-            </ul>
-        </div>
-
-        <ReviewForm v-on:review-submit="handleFormSubmit" />
+            <Tab id="add-review" title="Write a review">
+                <ReviewForm v-on:review-submit="handleFormSubmit" />
+            </Tab>
+        </Tabs>
     </div>
 </template>
 
 <script>
   import ReviewForm from './ReviewForm'
   import Tabs from './Tabs'
+  import Tab from './Tab'
 
   export default {
     name: 'Product',
-    components: {ReviewForm, Tabs},
+    components: {ReviewForm, Tabs, Tab},
     data: () => ({
       selectedVariant: 0,
       reviews: []
